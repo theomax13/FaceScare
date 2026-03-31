@@ -14,6 +14,7 @@
 		A10000010000000000000005 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000005 /* StatusBarController.swift */; };
 		A10000010000000000000006 /* StatsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000007 /* StatsStore.swift */; };
 		A10000010000000000000007 /* StatsExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000008 /* StatsExporter.swift */; };
+		A10000010000000000000008 /* WeeklyReportExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000009 /* WeeklyReportExporter.swift */; };
 		B10000010000000000000001 /* SensitivityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000001 /* SensitivityTests.swift */; };
 		B10000010000000000000002 /* ScareEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000002 /* ScareEngineTests.swift */; };
 		B10000010000000000000003 /* FaceDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000003 /* FaceDetectorTests.swift */; };
@@ -28,6 +29,7 @@
 		B1000001000000000000000C /* US3_1_StatsExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000000C /* US3_1_StatsExporterTests.swift */; };
 		B1000001000000000000000D /* US3_2_StealthInstallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000000D /* US3_2_StealthInstallTests.swift */; };
 		B1000001000000000000000E /* US3_3_ErgoScoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000000E /* US3_3_ErgoScoreTests.swift */; };
+		B1000001000000000000000F /* US3_4_WeeklyReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000000F /* US3_4_WeeklyReportTests.swift */; };
 		E4F2AA7F2F7A78EC009995E6 /* scare1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AA7E2F7A78EC009995E6 /* scare1.mp3 */; };
 		E4F2AA812F7A7912009995E6 /* jump-scare.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AA802F7A7912009995E6 /* jump-scare.png */; };
 /* End PBXBuildFile section */
@@ -51,6 +53,7 @@
 		A20000010000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A20000010000000000000007 /* StatsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsStore.swift; sourceTree = "<group>"; };
 		A20000010000000000000008 /* StatsExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsExporter.swift; sourceTree = "<group>"; };
+		A20000010000000000000009 /* WeeklyReportExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportExporter.swift; sourceTree = "<group>"; };
 		A20000010000000000000010 /* FaceScare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceScare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000010000000000000001 /* SensitivityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitivityTests.swift; sourceTree = "<group>"; };
 		B20000010000000000000002 /* ScareEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScareEngineTests.swift; sourceTree = "<group>"; };
@@ -66,6 +69,7 @@
 		B2000001000000000000000C /* US3_1_StatsExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US3_1_StatsExporterTests.swift; sourceTree = "<group>"; };
 		B2000001000000000000000D /* US3_2_StealthInstallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US3_2_StealthInstallTests.swift; sourceTree = "<group>"; };
 		B2000001000000000000000E /* US3_3_ErgoScoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US3_3_ErgoScoreTests.swift; sourceTree = "<group>"; };
+		B2000001000000000000000F /* US3_4_WeeklyReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US3_4_WeeklyReportTests.swift; sourceTree = "<group>"; };
 		B20000010000000000000010 /* FaceScareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaceScareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F2AA7E2F7A78EC009995E6 /* scare1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scare1.mp3; sourceTree = "<group>"; };
 		E4F2AA802F7A7912009995E6 /* jump-scare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jump-scare.png"; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 				A20000010000000000000005 /* StatusBarController.swift */,
 				A20000010000000000000007 /* StatsStore.swift */,
 				A20000010000000000000008 /* StatsExporter.swift */,
+				A20000010000000000000009 /* WeeklyReportExporter.swift */,
 				A20000010000000000000006 /* Info.plist */,
 				A30000010000000000000004 /* Resources */,
 			);
@@ -149,6 +154,7 @@
 				B2000001000000000000000C /* US3_1_StatsExporterTests.swift */,
 				B2000001000000000000000D /* US3_2_StealthInstallTests.swift */,
 				B2000001000000000000000E /* US3_3_ErgoScoreTests.swift */,
+				B2000001000000000000000F /* US3_4_WeeklyReportTests.swift */,
 			);
 			path = FaceScareTests;
 			sourceTree = "<group>";
@@ -252,6 +258,7 @@
 				A10000010000000000000005 /* StatusBarController.swift in Sources */,
 				A10000010000000000000006 /* StatsStore.swift in Sources */,
 				A10000010000000000000007 /* StatsExporter.swift in Sources */,
+				A10000010000000000000008 /* WeeklyReportExporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +280,7 @@
 				B1000001000000000000000C /* US3_1_StatsExporterTests.swift in Sources */,
 				B1000001000000000000000D /* US3_2_StealthInstallTests.swift in Sources */,
 				B1000001000000000000000E /* US3_3_ErgoScoreTests.swift in Sources */,
+				B1000001000000000000000F /* US3_4_WeeklyReportTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

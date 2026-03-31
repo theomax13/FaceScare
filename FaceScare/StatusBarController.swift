@@ -141,6 +141,14 @@ final class StatusBarController: NSObject {
             )
             shareItem.target = self
             menu.addItem(shareItem)
+
+            let reportItem = NSMenuItem(
+                title: "Export weekly report",
+                action: #selector(exportWeeklyReport),
+                keyEquivalent: ""
+            )
+            reportItem.target = self
+            menu.addItem(reportItem)
         }
 
         menu.addItem(.separator())
@@ -159,6 +167,18 @@ final class StatusBarController: NSObject {
     }
 
     // MARK: - Actions
+
+    @objc private func exportWeeklyReport() {
+        guard let store = statsStore else { return }
+
+        if WeeklyReportExporter.export(from: store) != nil {
+            let originalTitle = statusItem.button?.title
+            statusItem.button?.title = "✅"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                self?.statusItem.button?.title = originalTitle ?? "👁️"
+            }
+        }
+    }
 
     @objc private func shareStats() {
         guard let store = statsStore,
