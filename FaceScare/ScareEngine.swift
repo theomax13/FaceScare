@@ -21,14 +21,39 @@ final class ScareEngine {
     /// Counter for analytics / metrics tracking.
     private(set) var totalScaresTriggered: Int = 0
 
-    // MARK: - Sound Files
+    // MARK: - Custom Sound Directory
 
-    /// Bundled scary sound filenames.
-    /// ⚠️ DROP YOUR REAL AUDIO FILES HERE:
-    ///   1. Add scare1.mp3, scare2.mp3, scare3.mp3 to the FaceScare/Resources/ folder
-    ///   2. Make sure they are included in the Xcode target's "Copy Bundle Resources" build phase
-    ///   3. Recommended: short (1-3s), loud, startling sounds (scream, bang, horror sting)
-    private let soundFileNames = ["scare1"]
+    /// Default directory where the user can drop custom `scare*.mp3` files.
+    /// Located at ~/Library/Application Support/FaceScare/
+    static var defaultCustomSoundDirectory: URL {
+        defaultCustomImageDirectory // Same directory
+    }
+
+    /// Discovers all `scare*.mp3` files in the given directory.
+    /// If the custom directory has scare files, returns those.
+    /// Otherwise falls back to bundle resources.
+    static func resolveScareSoundURLs(customDirectory: URL? = nil) -> [URL] {
+        let directory = customDirectory ?? defaultCustomSoundDirectory
+
+        // Scan custom directory for scare*.mp3 files
+        if let contents = try? FileManager.default.contentsOfDirectory(
+            at: directory,
+            includingPropertiesForKeys: nil
+        ) {
+            let scareFiles = contents.filter { url in
+                url.lastPathComponent.hasPrefix("scare") && url.pathExtension == "mp3"
+            }
+            if !scareFiles.isEmpty {
+                return scareFiles
+            }
+        }
+
+        // Fallback: look in the bundle
+        guard let bundleURL = Bundle.main.url(forResource: "scare1", withExtension: "mp3") else {
+            return []
+        }
+        return [bundleURL]
+    }
 
     // MARK: - Public API
 
@@ -52,18 +77,17 @@ final class ScareEngine {
     // MARK: - Sound Playback
 
     private func playRandomScarySound() {
-        guard let randomName = soundFileNames.randomElement(),
-              let url = Bundle.main.url(forResource: randomName, withExtension: "mp3")
-        else {
-            // Fallback: play the system alert sound if no audio files are bundled
+        let soundURLs = ScareEngine.resolveScareSoundURLs()
+
+        guard let url = soundURLs.randomElement() else {
             NSSound.beep()
-            print("[FaceScare] ⚠️ No sound file found. Add scare1.mp3, scare2.mp3, scare3.mp3 to Resources/")
+            print("[FaceScare] No scare*.mp3 file found. Add files to ~/Library/Application Support/FaceScare/")
             return
         }
 
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.volume = 1.0 // Maximum volume for maximum scare
+            audioPlayer?.volume = 1.0
             audioPlayer?.play()
         } catch {
             print("[FaceScare] Failed to play sound: \(error.localizedDescription)")
