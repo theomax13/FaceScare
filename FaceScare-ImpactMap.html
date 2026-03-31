@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FaceScare — Impact Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f8f7f4;
+    font-family: 'Comic Sans MS', 'Marker Felt', 'Patrick Hand', cursive, sans-serif;
+    overflow: auto;
+    min-height: 100vh;
+  }
+  h1 {
+    text-align: center;
+    padding: 24px 0 8px;
+    font-size: 22px;
+    color: #444;
+    letter-spacing: 1px;
+  }
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    padding: 8px 0 18px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #555;
+  }
+  .legend-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px dashed rgba(0,0,0,0.2);
+  }
+  svg {
+    display: block;
+    margin: 0 auto;
+  }
+  .tooltip {
+    position: fixed;
+    background: #333;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: system-ui, sans-serif;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    max-width: 260px;
+    z-index: 100;
+    line-height: 1.4;
+  }
+  .node-group { cursor: pointer; }
+  .node-group:hover .node-shape { filter: brightness(1.08); }
+  .connector {
+    fill: none;
+    stroke: #555;
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+</style>
+</head>
+<body>
+
+<h1>FaceScare — Impact Mapping</h1>
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#c4daf4"></div>GOAL (Pourquoi)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fce9a3"></div>ACTOR (Qui)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#b8e6cc"></div>IMPACT (Comment)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f8c4c4"></div>DELIVERABLE (Quoi)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#e8dff5"></div>USER STORY</div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<svg id="map"></svg>
+
+<script>
+const svg = document.getElementById('map');
+const tooltip = document.getElementById('tooltip');
+const NS = 'http://www.w3.org/2000/svg';
+
+// ─── TREE DATA (no positions — computed automatically) ───
+const tree = {
+  label: "Lutter contre la\nfatigue oculaire et\nla mauvaise posture\nde maniere ludique",
+  tip: "Objectif metier: creer un ancrage emotionnel qui corrige la posture, la ou les rappels passifs echouent.",
+  type: "goal",
+  children: [
+    {
+      label: "Utilisateur\nDev / Travailleur\necran",
+      tip: "Persona principal: developpeur ou travailleur sur ecran 8h+/jour",
+      type: "actor",
+      children: [
+        {
+          label: "Corriger sa\nposture\ninconsciemment",
+          tip: "L'utilisateur developpe un reflexe de recul grace au stimulus negatif",
+          type: "impact",
+          children: [
+            {
+              label: "Detection faciale\ntemps reel", tip: "Camera + Vision framework pour analyser la distance visage-ecran", type: "deliverable",
+              children: [
+                { label: "US1.1\nAutoriser\nla camera", tip: "R1 — Autoriser l'acces a la camera pour detecter le visage", type: "us" },
+                { label: "US1.2\nDetecter\nun visage", tip: "R1 — Detecter un visage en temps reel via la camera", type: "us" },
+                { label: "US1.3\nEvaluer la\nproximite", tip: "R1 — Evaluer si l'utilisateur est trop pres de l'ecran", type: "us" },
+              ]
+            },
+            {
+              label: "Jump scare\ndissuasif", tip: "Stimulus negatif qui cree un reflexe pavlovien de recul", type: "deliverable",
+              children: [
+                { label: "US1.4\nJouer un son\neffrayant", tip: "R1 — Jouer un son effrayant quand l'utilisateur est trop pres", type: "us" },
+                { label: "US1.5\nAfficher image\nplein ecran", tip: "R1 — Afficher une image effrayante en plein ecran", type: "us" },
+                { label: "US1.6\nDeclencher\nle scare", tip: "R1 — Declencher automatiquement le scare", type: "us" },
+                { label: "US1.7\nEmpecher scares\nrepetitifs", tip: "R1 — Cooldown entre les scares pour eviter la fatigue", type: "us" },
+              ]
+            },
+          ]
+        },
+        {
+          label: "Adapter l'app\na son usage",
+          tip: "Chaque utilisateur a une distance de travail differente",
+          type: "impact",
+          children: [
+            {
+              label: "Presence\nmenu bar", tip: "Acces rapide depuis la barre de menu macOS", type: "deliverable",
+              children: [
+                { label: "US1.8\nApparaitre dans\nla barre de menu", tip: "R1 — Voir l'app dans la barre de menu macOS", type: "us" },
+                { label: "US1.9\nQuitter\nl'application", tip: "R1 — Pouvoir quitter l'app facilement", type: "us" },
+              ]
+            },
+            {
+              label: "Reglages\npersonnalisables", tip: "Adapter la sensibilite et le comportement", type: "deliverable",
+              children: [
+                { label: "US2.1\nChoisir la\nsensibilite", tip: "R2 — Regler la distance de declenchement", type: "us" },
+                { label: "US2.2\nChoisir le delai\ncooldown", tip: "R2 — Choisir le temps entre deux scares", type: "us" },
+                { label: "US2.3\nActiver ou\ndesactiver l'app", tip: "R2 — Activer/desactiver l'app rapidement", type: "us" },
+              ]
+            },
+          ]
+        },
+        {
+          label: "Suivre sa\nprogression",
+          tip: "Gamifier l'amelioration posturale pour maintenir la motivation",
+          type: "impact",
+          children: [
+            {
+              label: "Compteur de\nscares", tip: "Indicateur simple du nombre de corrections posturales", type: "deliverable",
+              children: [
+                { label: "US2.6\nVoir le nombre\nde scares", tip: "R2 — Voir combien de scares recus dans la session", type: "us" },
+              ]
+            },
+            {
+              label: "Score\nergonomique", tip: "Score 0-100 avec tendance sur 7 jours", type: "deliverable",
+              children: [
+                { label: "US3.3\nVoir son score\nergonomique", tip: "R3 — Voir son score ergonomique et sa tendance", type: "us" },
+              ]
+            },
+          ]
+        }
+      ]
+    },
+    {
+      label: "Collegue / Ami\nVecteur viral",
+      tip: "Persona secondaire: celui qui decouvre l'app, la partage, ou l'installe en prank",
+      type: "actor",
+      children: [
+        {
+          label: "Partager et\nrecommander",
+          tip: "Le cote prank rend l'app naturellement virale",
+          type: "impact",
+          children: [
+            {
+              label: "Export stats\nen image", tip: "Capturer et partager ses stats sous forme d'image", type: "deliverable",
+              children: [
+                { label: "US3.1\nExporter ses\nstats en image", tip: "R3 — Exporter ses stats en PNG pour les partager", type: "us" },
+              ]
+            },
+            {
+              label: "Mode prank\nsilencieux", tip: "Installation discrete pour surprendre un collegue", type: "deliverable",
+              children: [
+                { label: "US3.2\nInstaller\ndiscretement\nmode prank", tip: "R3 — Installer l'app discretement (menu bar only, pas de Dock)", type: "us" },
+              ]
+            },
+          ]
+        },
+        {
+          label: "S'amuser avec\nl'app au bureau",
+          tip: "La personnalisation augmente l'engagement et le fun",
+          type: "impact",
+          children: [
+            {
+              label: "Image scare\ncustom", tip: "Personnaliser l'image du jump scare", type: "deliverable",
+              children: [
+                { label: "US2.4\nChanger l'image\ndu jump scare", tip: "R2 — Mettre sa propre image de scare", type: "us" },
+              ]
+            },
+            {
+              label: "Sons\npersonnalises", tip: "Ajouter ses propres sons effrayants ou rigolos", type: "deliverable",
+              children: [
+                { label: "US2.5\nAjouter ses\npropres sons", tip: "R2 — Ajouter ses propres sons de scare", type: "us" },
+              ]
+            },
+          ]
+        }
+      ]
+    },
+    {
+      label: "Manager\nbien-etre\nPrescripteur",
+      tip: "Persona tertiaire: responsable QVT qui pourrait deployer l'app a l'equipe",
+      type: "actor",
+      children: [
+        {
+          label: "Ameliorer\nl'ergonomie\nde l'equipe",
+          tip: "Besoin de visibilite sur l'impact reel de l'outil",
+          type: "impact",
+          children: [
+            {
+              label: "Rapport hebdo\nanonymise", tip: "Rapport CSV anonymise pour le suivi d'equipe", type: "deliverable",
+              children: [
+                { label: "US3.4\nGenerer rapport\nhebdomadaire", tip: "R3 — Rapport hebdomadaire anonymise de l'equipe", type: "us" },
+              ]
+            },
+          ]
+        },
+        {
+          label: "Deployer\nfacilement",
+          tip: "Un outil non deployable a l'echelle ne sera jamais adopte en entreprise",
+          type: "impact",
+          children: [
+            {
+              label: "DMG signe\nnotarise", tip: "Distribution macOS sans alerte Gatekeeper", type: "deliverable",
+              children: [
+                { label: "US3.5\nInstaller sans\nalerte securite", tip: "R3 — Installer l'app sans alerte de securite macOS", type: "us" },
+              ]
+            },
+            {
+              label: "Config par\ndefaut entreprise", tip: "Preconfigurer les reglages pour deploiement en masse", type: "deliverable",
+              children: [
+                { label: "US3.6\nPreconfigurer\nreglages equipe", tip: "R3 — Preconfigurer les reglages pour toute l'equipe", type: "us" },
+              ]
+            },
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// ─── AUTO-LAYOUT (bottom-up width, top-down position) ───
+
+const LEAF_WIDTH = 130;
+const SIBLING_GAP = 18;
+const Y_LEVELS = { goal: 60, actor: 200, impact: 350, deliverable: 510, us: 660 };
+const HALF_HEIGHTS = { goal: 58, actor: 42, impact: 38, deliverable: 24, us: 26 };
+
+// Pass 1: compute width of each subtree
+function computeWidth(node) {
+  if (!node.children || node.children.length === 0) {
+    node._width = LEAF_WIDTH;
+    return node._width;
+  }
+  let total = 0;
+  node.children.forEach((child, i) => {
+    total += computeWidth(child);
+    if (i > 0) total += SIBLING_GAP;
+  });
+  node._width = Math.max(total, LEAF_WIDTH);
+  return node._width;
+}
+
+// Pass 2: assign x positions given a center
+function assignPositions(node, cx) {
+  node._x = cx;
+  node._y = Y_LEVELS[node.type];
+  if (!node.children || node.children.length === 0) return;
+
+  let totalW = 0;
+  node.children.forEach((c, i) => { totalW += c._width; if (i > 0) totalW += SIBLING_GAP; });
+  let startX = cx - totalW / 2;
+  node.children.forEach(child => {
+    const childCx = startX + child._width / 2;
+    assignPositions(child, childCx);
+    startX += child._width + SIBLING_GAP;
+  });
+}
+
+computeWidth(tree);
+assignPositions(tree, tree._width / 2 + 30);
+
+// ─── DRAWING HELPERS ───
+
+function jitter(base, range) {
+  return base + (Math.random() - 0.5) * range;
+}
+
+function ellipsePath(cx, cy, rx, ry, points = 40) {
+  let d = '';
+  for (let i = 0; i <= points; i++) {
+    const angle = (i / points) * Math.PI * 2;
+    const jx = jitter(0, 2.5);
+    const jy = jitter(0, 2.5);
+    const px = cx + Math.cos(angle) * rx + jx;
+    const py = cy + Math.sin(angle) * ry + jy;
+    d += (i === 0 ? 'M' : 'L') + px.toFixed(1) + ',' + py.toFixed(1);
+  }
+  return d + 'Z';
+}
+
+function rectPath(x, y, w, h) {
+  const j = () => jitter(0, 2);
+  return `M${x+j()},${y+j()} L${x+w+j()},${y+j()} L${x+w+j()},${y+h+j()} L${x+j()},${y+h+j()} Z`;
+}
+
+function connectorPath(x1, y1, x2, y2) {
+  const my = (y1 + y2) / 2;
+  const j1 = jitter(0, 6);
+  const j2 = jitter(0, 6);
+  return `M${x1},${y1} C${x1+j1},${my+j2} ${x2-j1},${my-j2} ${x2},${y2}`;
+}
+
+function createText(x, y, text, fontSize, color) {
+  const lines = text.split('\n');
+  const g = document.createElementNS(NS, 'text');
+  g.setAttribute('x', x);
+  g.setAttribute('text-anchor', 'middle');
+  g.setAttribute('fill', color);
+  g.setAttribute('font-size', fontSize);
+  g.setAttribute('font-family', "'Comic Sans MS', 'Marker Felt', cursive, sans-serif");
+  g.setAttribute('font-weight', 'bold');
+  const totalHeight = lines.length * (fontSize + 3);
+  const startY = y - totalHeight / 2 + fontSize;
+  lines.forEach((line, i) => {
+    const tspan = document.createElementNS(NS, 'tspan');
+    tspan.setAttribute('x', x);
+    tspan.setAttribute('dy', i === 0 ? '0' : (fontSize + 3));
+    tspan.setAttribute('y', i === 0 ? startY : '');
+    if (i > 0) tspan.removeAttribute('y');
+    tspan.textContent = line;
+    g.appendChild(tspan);
+  });
+  return g;
+}
+
+const STYLES = {
+  goal:        { rx: 100, ry: 58, fill: '#c4daf4', stroke: '#8badd4', sw: 2.5, dash: '6,4', fs: 12, fc: '#2a4a7a', shape: 'ellipse' },
+  actor:       { rx: 78, ry: 42, fill: '#fce9a3', stroke: '#d4b84a', sw: 2.5, dash: '8,5', fs: 12, fc: '#6b5a10', shape: 'ellipse' },
+  impact:      { rx: 68, ry: 38, fill: '#b8e6cc', stroke: '#6ab88e', sw: 2, dash: '4,4', fs: 12, fc: '#1a5c38', shape: 'ellipse' },
+  deliverable: { w: 140, h: 48, fill: '#f8c4c4', stroke: '#c47070', sw: 2.5, fs: 12, fc: '#6b2020', shape: 'rect' },
+  us:          { w: 120, h: 52, fill: '#e8dff5', stroke: '#9b85c4', sw: 1.5, fs: 10, fc: '#3d2a5c', shape: 'rect' },
+};
+
+function drawNode(node) {
+  const cx = node._x, cy = node._y;
+  const s = STYLES[node.type];
+  const g = document.createElementNS(NS, 'g');
+  g.classList.add('node-group');
+
+  let shape;
+  if (s.shape === 'ellipse') {
+    shape = document.createElementNS(NS, 'path');
+    shape.setAttribute('d', ellipsePath(cx, cy, s.rx, s.ry));
+    shape.setAttribute('stroke-dasharray', s.dash);
+  } else {
+    shape = document.createElementNS(NS, 'path');
+    shape.setAttribute('d', rectPath(cx - s.w/2, cy - s.h/2, s.w, s.h));
+  }
+  shape.setAttribute('fill', s.fill);
+  shape.setAttribute('stroke', s.stroke);
+  shape.setAttribute('stroke-width', s.sw);
+  shape.classList.add('node-shape');
+  g.appendChild(shape);
+  g.appendChild(createText(cx, cy, node.label, s.fs, s.fc));
+
+  g.addEventListener('mouseenter', () => { tooltip.textContent = node.tip; tooltip.style.opacity = '1'; });
+  g.addEventListener('mousemove', (e) => { tooltip.style.left = (e.clientX + 14) + 'px'; tooltip.style.top = (e.clientY - 10) + 'px'; });
+  g.addEventListener('mouseleave', () => { tooltip.style.opacity = '0'; });
+
+  return g;
+}
+
+function drawConnector(x1, y1, x2, y2) {
+  const path = document.createElementNS(NS, 'path');
+  path.setAttribute('d', connectorPath(x1, y1, x2, y2));
+  path.classList.add('connector');
+  return path;
+}
+
+// ─── RENDER ───
+
+const connectorsG = document.createElementNS(NS, 'g');
+const nodesG = document.createElementNS(NS, 'g');
+
+function renderTree(node) {
+  nodesG.appendChild(drawNode(node));
+  if (!node.children) return;
+  const parentBottom = node._y + HALF_HEIGHTS[node.type];
+  node.children.forEach(child => {
+    const childTop = child._y - HALF_HEIGHTS[child.type];
+    connectorsG.appendChild(drawConnector(node._x, parentBottom, child._x, childTop));
+    renderTree(child);
+  });
+}
+
+renderTree(tree);
+svg.appendChild(connectorsG);
+svg.appendChild(nodesG);
+
+const bbox = svg.getBBox();
+svg.setAttribute('viewBox', `${bbox.x - 20} ${bbox.y - 20} ${bbox.width + 40} ${bbox.height + 40}`);
+svg.setAttribute('width', '100%');
+svg.setAttribute('height', Math.max(bbox.height + 60, 700));
+</script>
+
+</body>
+</html>

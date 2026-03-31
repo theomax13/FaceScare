@@ -1,0 +1,84 @@
+flowchart TD
+  GOAL((POURQUOI\nLutter contre la fatigue\noculaire et la mauvaise\nposture devant ecran\nde maniere ludique))
+
+  GOAL --> USER
+  GOAL --> COLLEAGUE
+  GOAL --> MANAGER
+
+  USER[QUI : Utilisateur principal\nDeveloppeur / Travailleur ecran]
+  COLLEAGUE[QUI : Collegue / Ami\nVecteur viral]
+  MANAGER[QUI : Manager bien-etre\nPrescripteur]
+
+  %% Utilisateur — Impacts
+  USER --> I1(COMMENT\nCorriger sa posture\ninconsciemment)
+  USER --> I2(COMMENT\nAdapter l app a son usage)
+  USER --> I3(COMMENT\nSuivre sa progression)
+
+  %% Collegue — Impacts
+  COLLEAGUE --> I4(COMMENT\nPartager et recommander)
+  COLLEAGUE --> I5(COMMENT\nS amuser avec l app au bureau)
+
+  %% Manager — Impacts
+  MANAGER --> I6(COMMENT\nAmeliorer ergonomie\nde l equipe)
+  MANAGER --> I7(COMMENT\nDeployer facilement\nsur le parc)
+
+  %% Deliverables & US — I1
+  I1 --> D1[QUOI\nDetection faciale temps reel]
+  D1 --> US1.1[R1 US1.1\nAutoriser la camera]
+  D1 --> US1.2[R1 US1.2\nDetecter un visage]
+  D1 --> US1.3[R1 US1.3\nEvaluer la proximite]
+
+  I1 --> D2[QUOI\nJump scare dissuasif]
+  D2 --> US1.4[R1 US1.4\nJouer un son effrayant]
+  D2 --> US1.5[R1 US1.5\nAfficher image plein ecran]
+  D2 --> US1.6[R1 US1.6\nDeclencher le scare]
+  D2 --> US1.7[R1 US1.7\nEmpecher scares repetitifs]
+
+  I1 --> D3[QUOI\nPresence menu bar]
+  D3 --> US1.8[R1 US1.8\nApparaitre dans la barre de menu]
+  D3 --> US1.9[R1 US1.9\nQuitter l application]
+
+  %% Deliverables & US — I2
+  I2 --> D4[QUOI\nReglages personnalisables]
+  D4 --> US2.1[R2 US2.1\nChoisir la sensibilite]
+  D4 --> US2.2[R2 US2.2\nChoisir le delai cooldown]
+  D4 --> US2.3[R2 US2.3\nActiver ou desactiver l app]
+
+  %% Deliverables & US — I3
+  I3 --> D5[QUOI\nCompteur de scares]
+  D5 --> US2.6[R2 US2.6\nVoir le nombre de scares]
+
+  I3 --> D6[QUOI\nScore ergonomique]
+  D6 --> US3.3[R3 US3.3\nVoir son score ergonomique]
+
+  %% Deliverables & US — I4
+  I4 --> D7[QUOI\nExperience prank partageable]
+  D7 --> US3.1[R3 US3.1\nExporter ses stats en image]
+  D7 --> US3.2[R3 US3.2\nInstaller discretement mode prank]
+
+  %% Deliverables & US — I5
+  I5 --> D8[QUOI\nPersonnalisation du scare]
+  D8 --> US2.4[R2 US2.4\nChanger l image du jump scare]
+  D8 --> US2.5[R2 US2.5\nAjouter ses propres sons]
+
+  %% Deliverables & US — I6
+  I6 --> D9[QUOI\nRapport collectif anonymise]
+  D9 --> US3.4[R3 US3.4\nGenerer rapport hebdomadaire]
+
+  %% Deliverables & US — I7
+  I7 --> D10[QUOI\nDistribution simplifiee]
+  D10 --> US3.5[R3 US3.5\nInstaller sans alerte securite]
+  D10 --> US3.6[R3 US3.6\nPreconfigurer reglages equipe]
+
+  %% Styles
+  classDef goal fill:#c4daf4,stroke:#8badd4,stroke-width:2px,color:#2a4a7a
+  classDef actor fill:#fce9a3,stroke:#d4b84a,stroke-width:2px,color:#6b5a10
+  classDef impact fill:#b8e6cc,stroke:#6ab88e,stroke-width:2px,color:#1a5c38
+  classDef deliverable fill:#f8c4c4,stroke:#c47070,stroke-width:2px,color:#6b2020
+  classDef us fill:#e8dff5,stroke:#9b85c4,stroke-width:1.5px,color:#3d2a5c
+
+  class GOAL goal
+  class USER,COLLEAGUE,MANAGER actor
+  class I1,I2,I3,I4,I5,I6,I7 impact
+  class D1,D2,D3,D4,D5,D6,D7,D8,D9,D10 deliverable
+  class US1.1,US1.2,US1.3,US1.4,US1.5,US1.6,US1.7,US1.8,US1.9,US2.1,US2.2,US2.3,US2.4,US2.5,US2.6,US3.1,US3.2,US3.3,US3.4,US3.5,US3.6 us
