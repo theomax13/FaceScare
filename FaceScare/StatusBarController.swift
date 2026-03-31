@@ -32,6 +32,7 @@ final class StatusBarController: NSObject {
 
     private var toggleItem: NSMenuItem!
     private(set) var statsItem: NSMenuItem!
+    private(set) var ergoScoreItem: NSMenuItem?
 
     // MARK: - Init
 
@@ -119,6 +120,17 @@ final class StatusBarController: NSObject {
         )
         statsItem.isEnabled = false
         menu.addItem(statsItem)
+
+        // Ergo score (only if StatsStore is available)
+        if statsStore != nil {
+            ergoScoreItem = NSMenuItem(
+                title: "Ergo score: --/100",
+                action: nil,
+                keyEquivalent: ""
+            )
+            ergoScoreItem?.isEnabled = false
+            menu.addItem(ergoScoreItem!)
+        }
 
         // Share stats (only if StatsStore is available)
         if statsStore != nil {
@@ -210,5 +222,6 @@ extension StatusBarController: NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
         // Refresh stats each time the menu is opened
         statsItem.title = "Scares triggered: \(scareEngine.totalScaresTriggered)"
+        ergoScoreItem?.title = statsStore?.ergoScoreText ?? "Ergo score: --/100"
     }
 }

@@ -130,4 +130,38 @@ final class StatsStore {
         let days = calendar.dateComponents([.day], from: firstLaunch, to: Date()).day ?? 0
         return days + 1
     }
+
+    // MARK: - Ergo Score
+
+    /// Ergonomic score from 0 (bad posture) to 100 (no scares).
+    /// Returns `nil` if fewer than 2 days of data are available.
+    ///
+    /// Formula: 100 - min(avgScares * 6.67, 100)
+    /// 0 scares/day → 100, 15 scares/day → ~0
+    var ergoScore: Int? {
+        let days = last7Days
+        guard days.count >= 2 else { return nil }
+
+        let totalScares = days.map(\.count).reduce(0, +)
+        let avg = Double(totalScares) / Double(days.count)
+        let score = 100.0 - min(avg * 6.67, 100.0)
+        return max(0, min(100, Int(score.rounded())))
+    }
+
+    /// Formatted ergo score for display in the menu.
+    /// Returns "Ergo score: --/100" if not enough data.
+    var ergoScoreText: String {
+        guard let score = ergoScore else {
+            return "Ergo score: --/100"
+        }
+
+        let trendEmoji: String
+        switch trend {
+        case .improving: trendEmoji = " ⬆️"
+        case .degrading: trendEmoji = " ⬇️"
+        case .stable:    trendEmoji = " ➡️"
+        }
+
+        return "Ergo score: \(score)/100\(trendEmoji)"
+    }
 }
