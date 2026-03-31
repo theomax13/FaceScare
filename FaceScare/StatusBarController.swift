@@ -17,6 +17,7 @@ final class StatusBarController: NSObject {
 
     private let faceDetector: FaceDetector
     private let scareEngine: ScareEngine
+    private let statsStore: StatsStore?
 
     // MARK: - Menu Bar
 
@@ -34,9 +35,10 @@ final class StatusBarController: NSObject {
 
     // MARK: - Init
 
-    init(faceDetector: FaceDetector, scareEngine: ScareEngine) {
+    init(faceDetector: FaceDetector, scareEngine: ScareEngine, statsStore: StatsStore? = nil) {
         self.faceDetector = faceDetector
         self.scareEngine = scareEngine
+        self.statsStore = statsStore
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         super.init()
@@ -118,6 +120,17 @@ final class StatusBarController: NSObject {
         statsItem.isEnabled = false
         menu.addItem(statsItem)
 
+        // Share stats (only if StatsStore is available)
+        if statsStore != nil {
+            let shareItem = NSMenuItem(
+                title: "Share my stats",
+                action: #selector(shareStats),
+                keyEquivalent: ""
+            )
+            shareItem.target = self
+            menu.addItem(shareItem)
+        }
+
         menu.addItem(.separator())
 
         // Quit
@@ -134,6 +147,20 @@ final class StatusBarController: NSObject {
     }
 
     // MARK: - Actions
+
+    @objc private func shareStats() {
+        guard let store = statsStore,
+              let image = StatsExporter.generateImage(from: store) else { return }
+
+        if StatsExporter.copyToClipboard(image: image) {
+            // Brief feedback via the menu bar icon
+            let originalTitle = statusItem.button?.title
+            statusItem.button?.title = "✅"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                self?.statusItem.button?.title = originalTitle ?? "👁️"
+            }
+        }
+    }
 
     @objc private func toggleDetection() {
         isEnabled.toggle()

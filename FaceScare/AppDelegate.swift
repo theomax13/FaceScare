@@ -15,6 +15,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusBarController: StatusBarController?
     private let faceDetector = FaceDetector()
     private let scareEngine = ScareEngine()
+    private let statsStore = StatsStore()
 
     // MARK: - Lifecycle
 
@@ -24,12 +25,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Wire up: when FaceDetector fires a proximity event, trigger the scare
         faceDetector.onFaceTooClose = { [weak self] in
             self?.scareEngine.triggerScare()
+            self?.statsStore.recordScare()
         }
 
         // Build the menu bar UI, passing references so it can control settings
         statusBarController = StatusBarController(
             faceDetector: faceDetector,
-            scareEngine: scareEngine
+            scareEngine: scareEngine,
+            statsStore: statsStore
         )
 
         // Start detection by default
