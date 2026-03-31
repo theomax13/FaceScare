@@ -26,6 +26,7 @@
 		B1000001000000000000000A /* US2_3_ToggleDetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000000A /* US2_3_ToggleDetectionTests.swift */; };
 		B1000001000000000000000B /* US3_1_StatsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000000B /* US3_1_StatsStoreTests.swift */; };
 		B1000001000000000000000C /* US3_1_StatsExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000000C /* US3_1_StatsExporterTests.swift */; };
+		B1000001000000000000000D /* US3_2_StealthInstallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000000D /* US3_2_StealthInstallTests.swift */; };
 		E4F2AA7F2F7A78EC009995E6 /* scare1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AA7E2F7A78EC009995E6 /* scare1.mp3 */; };
 		E4F2AA812F7A7912009995E6 /* jump-scare.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AA802F7A7912009995E6 /* jump-scare.png */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,7 @@
 		B2000001000000000000000A /* US2_3_ToggleDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US2_3_ToggleDetectionTests.swift; sourceTree = "<group>"; };
 		B2000001000000000000000B /* US3_1_StatsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US3_1_StatsStoreTests.swift; sourceTree = "<group>"; };
 		B2000001000000000000000C /* US3_1_StatsExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US3_1_StatsExporterTests.swift; sourceTree = "<group>"; };
+		B2000001000000000000000D /* US3_2_StealthInstallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US3_2_StealthInstallTests.swift; sourceTree = "<group>"; };
 		B20000010000000000000010 /* FaceScareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaceScareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F2AA7E2F7A78EC009995E6 /* scare1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scare1.mp3; sourceTree = "<group>"; };
 		E4F2AA802F7A7912009995E6 /* jump-scare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jump-scare.png"; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				B2000001000000000000000A /* US2_3_ToggleDetectionTests.swift */,
 				B2000001000000000000000B /* US3_1_StatsStoreTests.swift */,
 				B2000001000000000000000C /* US3_1_StatsExporterTests.swift */,
+				B2000001000000000000000D /* US3_2_StealthInstallTests.swift */,
 			);
 			path = FaceScareTests;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				B1000001000000000000000A /* US2_3_ToggleDetectionTests.swift in Sources */,
 				B1000001000000000000000B /* US3_1_StatsStoreTests.swift in Sources */,
 				B1000001000000000000000C /* US3_1_StatsExporterTests.swift in Sources */,
+				B1000001000000000000000D /* US3_2_StealthInstallTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
