@@ -21,16 +21,16 @@ final class StatusBarController: NSObject {
     // MARK: - Menu Bar
 
     private let statusItem: NSStatusItem
-    private let menu = NSMenu()
+    let menu = NSMenu()
 
     // MARK: - State
 
-    private var isEnabled = true
+    private(set) var isEnabled = true
 
     // MARK: - Menu Items (need references for dynamic updates)
 
     private var toggleItem: NSMenuItem!
-    private var statsItem: NSMenuItem!
+    private(set) var statsItem: NSMenuItem!
 
     // MARK: - Init
 
