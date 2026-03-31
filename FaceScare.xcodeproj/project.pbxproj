@@ -17,6 +17,7 @@
 		B10000010000000000000003 /* FaceDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000003 /* FaceDetectorTests.swift */; };
 		B10000010000000000000004 /* StatusBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000004 /* StatusBarControllerTests.swift */; };
 		B10000010000000000000005 /* US2_6_ScareCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000005 /* US2_6_ScareCounterTests.swift */; };
+		B10000010000000000000006 /* US2_4_CustomScareImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000006 /* US2_4_CustomScareImageTests.swift */; };
 		E4F2AA7F2F7A78EC009995E6 /* scare1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AA7E2F7A78EC009995E6 /* scare1.mp3 */; };
 		E4F2AA812F7A7912009995E6 /* jump-scare.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AA802F7A7912009995E6 /* jump-scare.png */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		B20000010000000000000003 /* FaceDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectorTests.swift; sourceTree = "<group>"; };
 		B20000010000000000000004 /* StatusBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarControllerTests.swift; sourceTree = "<group>"; };
 		B20000010000000000000005 /* US2_6_ScareCounterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US2_6_ScareCounterTests.swift; sourceTree = "<group>"; };
+		B20000010000000000000006 /* US2_4_CustomScareImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US2_4_CustomScareImageTests.swift; sourceTree = "<group>"; };
 		B20000010000000000000010 /* FaceScareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaceScareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F2AA7E2F7A78EC009995E6 /* scare1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scare1.mp3; sourceTree = "<group>"; };
 		E4F2AA802F7A7912009995E6 /* jump-scare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jump-scare.png"; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				B20000010000000000000003 /* FaceDetectorTests.swift */,
 				B20000010000000000000004 /* StatusBarControllerTests.swift */,
 				B20000010000000000000005 /* US2_6_ScareCounterTests.swift */,
+				B20000010000000000000006 /* US2_4_CustomScareImageTests.swift */,
 			);
 			path = FaceScareTests;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				B10000010000000000000003 /* FaceDetectorTests.swift in Sources */,
 				B10000010000000000000004 /* StatusBarControllerTests.swift in Sources */,
 				B10000010000000000000005 /* US2_6_ScareCounterTests.swift in Sources */,
+				B10000010000000000000006 /* US2_4_CustomScareImageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

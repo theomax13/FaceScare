@@ -71,10 +71,33 @@ final class ScareEngine {
         }
     }
 
+    // MARK: - Custom Image Directory
+
+    /// Default directory where the user can drop a custom `jump-scare.png`.
+    /// Located at ~/Library/Application Support/FaceScare/
+    static var defaultCustomImageDirectory: URL {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("FaceScare")
+    }
+
+    /// Resolves the URL for `jump-scare.png`, checking the custom directory first, then the bundle.
+    /// Returns `nil` if the image is not found in either location.
+    static func resolveScareImageURL(customDirectory: URL? = nil) -> URL? {
+        let directory = customDirectory ?? defaultCustomImageDirectory
+        let customURL = directory.appendingPathComponent("jump-scare.png")
+
+        if FileManager.default.fileExists(atPath: customURL.path) {
+            return customURL
+        }
+
+        return Bundle.main.url(forResource: "jump-scare", withExtension: "png")
+    }
+
     // MARK: - Screen Flash
 
-    /// Displays `jump-scare.png` full-screen for a brief moment (500ms).
-    /// Falls back to a red overlay if the image is missing from the bundle.
+    /// Displays `jump-scare.png` full-screen for a brief moment.
+    /// Checks ~/Library/Application Support/FaceScare/ first, then falls back to the bundle.
+    /// Falls back to a red overlay if the image is missing or unreadable.
     private func flashScreen() {
         guard let screen = NSScreen.main else { return }
 
@@ -90,7 +113,7 @@ final class ScareEngine {
         window.hasShadow = false
         window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
 
-        if let imageURL = Bundle.main.url(forResource: "jump-scare", withExtension: "png"),
+        if let imageURL = ScareEngine.resolveScareImageURL(),
            let image = NSImage(contentsOf: imageURL) {
             // Show the jump-scare image scaled to fill the entire screen
             let imageView = NSImageView(frame: screen.frame)
@@ -101,14 +124,14 @@ final class ScareEngine {
             window.backgroundColor = .black
         } else {
             // Fallback: red flash if jump-scare.png is missing
-            window.backgroundColor = NSColor.red.withAlphaComponent(0.6)
-            print("[FaceScare] ⚠️ jump-scare.png not found in bundle. Using red flash fallback.")
+            window.backgroundColor = NSColor.red.withAlphaComponent(2.5)
+            print("[FaceScare] jump-scare.png not found. Using red flash fallback.")
         }
 
         window.orderFrontRegardless()
         self.flashWindow = window
 
-        // Dismiss after 500ms (slightly longer to let the image register)
+        // Dismiss after 2.5s
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
             self?.flashWindow?.orderOut(nil)
             self?.flashWindow = nil
