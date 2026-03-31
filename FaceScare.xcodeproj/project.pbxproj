@@ -19,6 +19,9 @@
 		B10000010000000000000005 /* US2_6_ScareCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000005 /* US2_6_ScareCounterTests.swift */; };
 		B10000010000000000000006 /* US2_4_CustomScareImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000006 /* US2_4_CustomScareImageTests.swift */; };
 		B10000010000000000000007 /* US2_5_CustomScareSoundsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000007 /* US2_5_CustomScareSoundsTests.swift */; };
+		B10000010000000000000008 /* US2_1_SensitivityMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000008 /* US2_1_SensitivityMenuTests.swift */; };
+		B10000010000000000000009 /* US2_2_CooldownMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000010000000000000009 /* US2_2_CooldownMenuTests.swift */; };
+		B1000001000000000000000A /* US2_3_ToggleDetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000000A /* US2_3_ToggleDetectionTests.swift */; };
 		E4F2AA7F2F7A78EC009995E6 /* scare1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AA7E2F7A78EC009995E6 /* scare1.mp3 */; };
 		E4F2AA812F7A7912009995E6 /* jump-scare.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AA802F7A7912009995E6 /* jump-scare.png */; };
 /* End PBXBuildFile section */
@@ -48,6 +51,9 @@
 		B20000010000000000000005 /* US2_6_ScareCounterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US2_6_ScareCounterTests.swift; sourceTree = "<group>"; };
 		B20000010000000000000006 /* US2_4_CustomScareImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US2_4_CustomScareImageTests.swift; sourceTree = "<group>"; };
 		B20000010000000000000007 /* US2_5_CustomScareSoundsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US2_5_CustomScareSoundsTests.swift; sourceTree = "<group>"; };
+		B20000010000000000000008 /* US2_1_SensitivityMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US2_1_SensitivityMenuTests.swift; sourceTree = "<group>"; };
+		B20000010000000000000009 /* US2_2_CooldownMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US2_2_CooldownMenuTests.swift; sourceTree = "<group>"; };
+		B2000001000000000000000A /* US2_3_ToggleDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = US2_3_ToggleDetectionTests.swift; sourceTree = "<group>"; };
 		B20000010000000000000010 /* FaceScareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaceScareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F2AA7E2F7A78EC009995E6 /* scare1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scare1.mp3; sourceTree = "<group>"; };
 		E4F2AA802F7A7912009995E6 /* jump-scare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jump-scare.png"; sourceTree = "<group>"; };
@@ -122,6 +128,9 @@
 				B20000010000000000000005 /* US2_6_ScareCounterTests.swift */,
 				B20000010000000000000006 /* US2_4_CustomScareImageTests.swift */,
 				B20000010000000000000007 /* US2_5_CustomScareSoundsTests.swift */,
+				B20000010000000000000008 /* US2_1_SensitivityMenuTests.swift */,
+				B20000010000000000000009 /* US2_2_CooldownMenuTests.swift */,
+				B2000001000000000000000A /* US2_3_ToggleDetectionTests.swift */,
 			);
 			path = FaceScareTests;
 			sourceTree = "<group>";
@@ -237,6 +246,9 @@
 				B10000010000000000000005 /* US2_6_ScareCounterTests.swift in Sources */,
 				B10000010000000000000006 /* US2_4_CustomScareImageTests.swift in Sources */,
 				B10000010000000000000007 /* US2_5_CustomScareSoundsTests.swift in Sources */,
+				B10000010000000000000008 /* US2_1_SensitivityMenuTests.swift in Sources */,
+				B10000010000000000000009 /* US2_2_CooldownMenuTests.swift in Sources */,
+				B1000001000000000000000A /* US2_3_ToggleDetectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
